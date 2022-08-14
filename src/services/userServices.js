@@ -14,7 +14,7 @@ const create = async (displayName, email, password, image) => {
 
   if (error) {
     const err = new Error(error.message);
-    err.code = 'BadRequest';
+    err.code = 'BAD_REQUEST';
     throw err;
   }
 
@@ -22,7 +22,7 @@ const create = async (displayName, email, password, image) => {
 
   if (userAlreadyRegister) {
     const err = new Error('User already registered');
-    err.code = 'Conflict';
+    err.code = 'CONFLICT';
     throw err;
   }
 
