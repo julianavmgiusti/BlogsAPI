@@ -10,6 +10,12 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAllCategories = async (_req, res) => {
+    const result = await categoryServices.gettAllCategories();
+    return res.status(200).json(result);
+  };
+
 module.exports = {
   create,
+  getAllCategories,
 }; 

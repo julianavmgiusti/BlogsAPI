@@ -7,5 +7,6 @@ const routeCategory = Router();
 routeCategory.use(tokenValidation);
 
 routeCategory.post('/', categoryController.create);
+routeCategory.get('/', categoryController.getAllCategories);
 
 module.exports = routeCategory;
