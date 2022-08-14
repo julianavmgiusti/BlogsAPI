@@ -1,14 +1,14 @@
 const httpStatusCode = {
-    BadRequest: 400,
-    InternalServer: 500,
-    Conflict: 409,
-    Unauthorized: 401,
-    NotFound: 404,
+    BAD_REQUEST: 400,
+    INTERNAL_SERVER: 500,
+    CONFLICT: 409,
+    UNAUTHORIZED: 401,
+    NOT_FOUND: 404,
   };
-  
+
   const error = (err, _req, res, _next) => {
     const { code } = err;
-    if (!code) return res.status(httpStatusCode.InternalServer).json({ message: err.message });
+    if (!code) return res.status(httpStatusCode.INTERNAL_SERVER).json({ message: err.message });
     return res.status(httpStatusCode[code]).json({ message: err.message });
   };
   
