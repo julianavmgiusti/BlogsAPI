@@ -16,7 +16,7 @@ const throwError = (code, message) => {
 const create = async (title, content, categoryIds, user) => {
   const { error } = schema.validate({ title, content, categoryIds });
   if (error) throwError('BAD_REQUEST', 'Some required fields are missing');
-    const { id } = await User.findOne({ where: { email: user.data.email } });
+    const { id } = await User.findOne({ where: { email: user.email } });
     const ctg = await Category.findAll({ where: { id: categoryIds } });
 
   if (ctg.length === 0) throwError('BAD_REQUEST', '"categoryIds" not found');
@@ -27,6 +27,17 @@ const create = async (title, content, categoryIds, user) => {
     return dataValues;
 };
 
+const getAllPosts = async () => {
+  const listPosts = await BlogPost.findAll({
+    include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', attributes: ['id', 'name'] },
+  ],
+  });
+  return listPosts;
+};
+
 module.exports = {
   create,
+  getAllPosts,
 };

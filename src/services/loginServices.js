@@ -17,15 +17,14 @@ return value;
 const signIn = async (email, password) => {
   try {
     const userValidation = validate({ email, password });
-
     if (userValidation.message) return userValidation;
+    
     const user = await User.findOne({
-      where: { email },
+      where: { email }, attributes: ['id', 'email'],
     });
-
     if (!user) return { status: 400, message: 'Invalid fields' };
 
-    const token = JWT.createToken({ email });
+    const token = JWT.createToken(user.dataValues);
     return { status: 200, token };
   } catch (erro) {
     console.log(erro);

@@ -7,5 +7,6 @@ const routePost = express.Router();
 routePost.use(tokenValidation);
 
 routePost.post('/', postController.create);
+routePost.get('/', postController.getAllPosts);
 
 module.exports = routePost;

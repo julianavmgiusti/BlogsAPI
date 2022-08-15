@@ -28,7 +28,7 @@ const create = async (displayName, email, password, image) => {
 
   await User.create({ displayName, email, password, image });
 
-  const token = JWT.createToken(email);
+  const token = JWT.createToken({ email });
 
   return token;
 };
