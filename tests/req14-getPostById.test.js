@@ -5,7 +5,7 @@ const { sequelize: sequelizeCli, apiURL: url } = require('./assets/constants');
 
 const { requirements } = require('../.trybe/requirements.json');
 
-describe.skip(requirements[13].description, () => {
+describe(requirements[13].description, () => {
   beforeAll(() => {
     shell.exec([
       sequelizeCli.drop,
