@@ -41,9 +41,19 @@ const editPost = async (req, res, next) => {
   }
 };
 
+const removePost = async (req, res, next) => {
+  try {
+    await postServices.removePost(req, res);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   create,
   getAllPosts,
   getPostById,
   editPost,
+  removePost,
 };

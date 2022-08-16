@@ -1,5 +1,4 @@
 const Joi = require('joi');
-// const { Op } = require('sequelize');
 const { User, Category, BlogPost, PostCategory } = require('../database/models');
 
 const schema = Joi.object({
@@ -71,9 +70,20 @@ const getPostById = async (id) => {
     return updatedPost.dataValues;
 };
 
+const removePost = async (req) => {
+  const { id: postId } = req.params;
+  await getPostById(postId);
+  const verifyIfUser = await BlogPost.findAll({ where: { id: postId, userId: req.user.id } });
+  if (verifyIfUser.length === 0) throwError('UNAUTHORIZED', 'Unauthorized user');
+
+  const deletePost = await BlogPost.destroy({ where: { id: postId } });
+  return deletePost;
+};
+
 module.exports = {
   create,
   getAllPosts,
   getPostById,
   editPost,
+  removePost,
 };

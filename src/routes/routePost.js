@@ -10,5 +10,5 @@ routePost.post('/', postController.create);
 routePost.get('/', postController.getAllPosts);
 routePost.get('/:id', postController.getPostById);
 routePost.put('/:id', postController.editPost);
-
+routePost.delete('/:id', postController.removePost);
 module.exports = routePost;
