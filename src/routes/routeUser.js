@@ -8,5 +8,6 @@ routeUser.post('/', userController.createUser);
 routeUser.use(tokenValidation);
 routeUser.get('/', userController.getAllUsers);
 routeUser.get('/:id', userController.getUserById);
+routeUser.delete('/me', userController.removeMe);
 
 module.exports = routeUser;
