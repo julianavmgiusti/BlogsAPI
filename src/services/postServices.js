@@ -1,10 +1,15 @@
 const Joi = require('joi');
+// const { Op } = require('sequelize');
 const { User, Category, BlogPost, PostCategory } = require('../database/models');
 
 const schema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
   categoryIds: Joi.array().items(Joi.number()),
+});
+const schemaEdit = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
 });
 
 const throwError = (code, message) => {
@@ -47,12 +52,28 @@ const getPostById = async (id) => {
   });
 
   if (!postsById) throwError('NOT_FOUND', 'Post does not exist');
-
+  console.log('🚀 ~ file: postServices.js ~ line 55 ~ getPostById ~ postsById', postsById);
   return postsById;
+};
+
+  const editPost = async (req, title, content) => {
+    const { error } = schemaEdit.validate({ title, content });
+    if (error) throwError('BAD_REQUEST', 'Some required fields are missing');
+    const { id: postId } = req.params;
+    const userId = req.user.id;
+    const posts = await BlogPost.findAll({ where: { id: postId, userId } });
+    if (posts.length === 0) throwError('UNAUTHORIZED', 'Unauthorized user');
+
+    await BlogPost.update({ title, content }, { where: { id: postId } });
+
+    const updatedPost = await getPostById(postId);
+
+    return updatedPost.dataValues;
 };
 
 module.exports = {
   create,
   getAllPosts,
   getPostById,
+  editPost,
 };

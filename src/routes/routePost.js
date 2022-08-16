@@ -9,5 +9,6 @@ routePost.use(tokenValidation);
 routePost.post('/', postController.create);
 routePost.get('/', postController.getAllPosts);
 routePost.get('/:id', postController.getPostById);
+routePost.put('/:id', postController.editPost);
 
 module.exports = routePost;
