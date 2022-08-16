@@ -27,7 +27,7 @@ const getUserById = async (req, res, next) => {
 
 const removeMe = async (req, res, next) => {
   try {
-    await userServices.remove(req);
+    await userServices.removeMe(req);
     res.status(204).end();
   } catch (err) {
     next(err);

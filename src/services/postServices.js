@@ -75,9 +75,7 @@ const removePost = async (req) => {
   await getPostById(postId);
   const verifyIfUser = await BlogPost.findAll({ where: { id: postId, userId: req.user.id } });
   if (verifyIfUser.length === 0) throwError('UNAUTHORIZED', 'Unauthorized user');
-
-  const deletePost = await BlogPost.destroy({ where: { id: postId } });
-  return deletePost;
+  await BlogPost.destroy({ where: { id: postId } });
 };
 
 module.exports = {
